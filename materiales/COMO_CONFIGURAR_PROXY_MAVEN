@@ -1,0 +1,17 @@
+Para configurar el proxy con Maven:
+
+Dentro de la carpeta C:\Users\Formacion\.m2 crear el archivo settings.xml y agregar lo siguiente:
+
+<settings>
+  <proxies>
+   <proxy>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>proxy.indra.es</host>
+      <username>USUARIO</username>
+      <password>CONTRASEÑA</password>
+      <port>8080</port>
+    </proxy>
+  </proxies>
+</settings>
+
