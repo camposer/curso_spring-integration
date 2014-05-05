@@ -4,12 +4,31 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
-	<bean id="mensaje" 
+		
+	<!-- Primer ejemplo. Todo español -->
+	<bean id="mensaje1" 
 		class="es.indra.formacion.springint.Mensaje">
 		<constructor-arg name="texto" value="Juan"/>
 	</bean>
-	<bean id="holaMundo" 
+	<bean id="holaMundo1" 
 		class="es.indra.formacion.springint.HolaMundo">
-		<property name="mensaje" ref="mensaje"/>
+		<property name="mensaje" ref="mensaje1"/>
 	</bean>
+
+	<!-- Segundo ejemplo. Todo en inglés -->
+	<bean id="mensaje2" 
+		class="es.indra.formacion.springint.Message">
+		<constructor-arg index="0" value="Juan"/>
+	</bean>
+	<bean id="holaMundo2" 
+		class="es.indra.formacion.springint.HelloWorld">
+		<property name="mensaje" ref="mensaje2"/>
+	</bean>
+
+	<!-- Tercer ejemplo. Español e inglés -->
+	<bean id="holaMundo3" 
+		class="es.indra.formacion.springint.HelloWorld">
+		<property name="mensaje" ref="mensaje1"/>
+	</bean>
+
 </beans>

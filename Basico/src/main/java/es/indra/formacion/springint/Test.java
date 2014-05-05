@@ -9,9 +9,8 @@ public class Test {
 				new ClassPathXmlApplicationContext(
 						"applicationContext.xml"
 						);
-		HolaMundo holaMundo =
-				ctx.getBean("holaMundo", HolaMundo.class);
-		
-		holaMundo.saludar();
+		ctx.getBean("holaMundo1", IHolaMundo.class).saludar();
+		ctx.getBean("holaMundo2", IHolaMundo.class).saludar();
+		ctx.getBean("holaMundo3", IHolaMundo.class).saludar();
 	}
 }
