@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 		
 	<!-- Primer ejemplo. Todo español -->
-	<bean id="mensaje1" 
+	<bean id="mensaje1" scope="prototype"
 		class="es.indra.formacion.springint.Mensaje">
 		<constructor-arg name="texto" value="Juan"/>
 	</bean>
