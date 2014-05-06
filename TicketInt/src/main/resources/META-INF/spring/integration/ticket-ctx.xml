@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-file="http://www.springframework.org/schema/integration/file"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file-2.2.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+	<context:component-scan 
+		base-package="es.indra.formacion.springint.tms.channel"/>
+	<context:component-scan 
+		base-package="es.indra.formacion.springint.tms.service"/>
+		
+	<!-- int:publish-subscribe-channel id="ticket"/-->
+	<int:channel id="ticket"/>
+	
+	<!-- File consumer -->	
+	<int-file:inbound-channel-adapter
+		channel="inFile" directory="file:input" prevent-duplicates="true"
+		filename-pattern="ticket*.csv">
+		<int:poller fixed-rate="1000" />
+	</int-file:inbound-channel-adapter>
+
+	<!-- File to bytes and file -->	
+	<int-file:file-to-bytes-transformer
+		input-channel="inFile" output-channel="outFile" />
+	<int:service-activator 
+		input-channel="outFile" output-channel="ticket" ref="byteToTicketService" />
+	<!-- int-file:outbound-channel-adapter channel="ticket" directory="file:output"/--><!-- File Writer -->
+	
+</beans>
