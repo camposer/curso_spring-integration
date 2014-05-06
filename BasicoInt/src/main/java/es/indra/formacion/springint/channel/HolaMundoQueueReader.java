@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HolaMundoQueueReader {
+	private final long TIMEOUT = 1000;
 	private QueueChannel canal;
 	
 	@Value("#{canalCola}")
@@ -19,6 +20,6 @@ public class HolaMundoQueueReader {
 	}
 
 	public void recibir() {
-		System.out.println("HolaMundoQueueReader: " + canal.receive());
+		System.out.println("HolaMundoQueueReader: " + canal.receive(TIMEOUT));
 	}
 }

@@ -22,12 +22,30 @@ public class Principal {
 		
 		// Enviando un mensaje
 		hmdr.enviar("Hola mundo");
+		hmdr.enviar("Hola mundo");
+		hmdr.enviar("Hola mundo");
 
 		/******* COLA *******/
 		HolaMundoQueueReader hmqr = context.getBean(HolaMundoQueueReader.class);
 		hmqr.enviar("Hola mundo");
+		hmqr.enviar("Hola mundo");
+		hmqr.enviar("Hola mundo");
 		
 		// Enviando un mensaje
-		hmqr.recibir();
+		new Thread(new HolaMundoQueueReaderThread(hmqr)).start();
+	}
+	
+	public static class HolaMundoQueueReaderThread implements Runnable {
+		private HolaMundoQueueReader hmqr;
+		
+		public HolaMundoQueueReaderThread(HolaMundoQueueReader hmqr) {
+			this.hmqr = hmqr;
+		}
+		
+		@Override
+		public void run() {
+			while (true) 
+				hmqr.recibir();
+		}
 	}
 }
