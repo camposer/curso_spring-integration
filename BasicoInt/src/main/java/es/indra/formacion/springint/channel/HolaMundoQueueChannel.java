@@ -1,12 +1,13 @@
 package es.indra.formacion.springint.channel;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.integration.Message;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HolaMundoQueueReader {
+public class HolaMundoQueueChannel {
 	private final long TIMEOUT = 1000;
 	private QueueChannel canal;
 	
@@ -20,6 +21,8 @@ public class HolaMundoQueueReader {
 	}
 
 	public void recibir() {
-		System.out.println("HolaMundoQueueReader: " + canal.receive(TIMEOUT));
+		Message<?> msg = canal.receive(TIMEOUT);
+		if (msg != null)
+			System.out.println("HolaMundoQueueReader: " + msg);
 	}
 }

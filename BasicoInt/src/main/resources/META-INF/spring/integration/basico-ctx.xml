@@ -9,10 +9,20 @@
 
 	<context:component-scan 
 		base-package="es.indra.formacion.springint.channel"/>
+	<context:component-scan 
+		base-package="es.indra.formacion.springint.service"/>
 		
 	<!-- Canales -->
 	<int:channel id="canalDirecto"/><!-- DirectChannel -->
 	<int:channel id="canalCola"><!-- QueueChannel -->
 		<int:queue capacity="1000"/>
 	</int:channel>
+	<int:publish-subscribe-channel id="canalPS"/><!-- PublishSubscribeChannel -->
+	<int:channel id="canalSalida"/><!-- DirectChannel -->
+	
+	<!-- Service activators -->
+	<int:service-activator input-channel="canalPS" 
+		ref="canalService" method="canalPS"/>
+	<int:service-activator input-channel="canalPS"
+		ref="canalService" method="traductor" output-channel="canalSalida"/>
 </beans>

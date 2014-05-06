@@ -3,8 +3,10 @@ package es.indra.formacion.springint;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import es.indra.formacion.springint.channel.HolaMundoDirectReader;
-import es.indra.formacion.springint.channel.HolaMundoQueueReader;
+import es.indra.formacion.springint.channel.HolaMundoDirectChannel;
+import es.indra.formacion.springint.channel.HolaMundoPSChannel;
+import es.indra.formacion.springint.channel.HolaMundoQueueChannel;
+import es.indra.formacion.springint.channel.HolaMundoSalidaChannel;
 
 public class Principal {
 	public static void main(String[] args) {
@@ -14,31 +16,48 @@ public class Principal {
 						+ "/integration/basico-ctx.xml");
 		context.start();
 
-		/******* DIRECT *******/
-		// Suscribiendo al HolaMundoReader
-		HolaMundoDirectReader hmdr = context.getBean(HolaMundoDirectReader.class);
-		hmdr.suscribir();
+		/******* SUSCRIPCIONES ******/
+		HolaMundoDirectChannel hmdc = context.getBean(HolaMundoDirectChannel.class);
+		hmdc.suscribir();
 		System.out.println("HolaMundoDirectReader suscrito...");
+
+		HolaMundoPSChannel hmpsc = context.getBean(HolaMundoPSChannel.class);
+		hmpsc.suscribir();
+		System.out.println("HolaMundoPSChannel suscrito...");
 		
-		// Enviando un mensaje
-		hmdr.enviar("Hola mundo");
-		hmdr.enviar("Hola mundo");
-		hmdr.enviar("Hola mundo");
+		HolaMundoSalidaChannel hmsc = context.getBean(HolaMundoSalidaChannel.class);
+		hmsc.suscribir();
+		System.out.println("HolaMundoSalidaChannel suscrito...");
+		
+		
+		/******* DIRECT *******/
+		// Enviando mensajes
+		hmdc.enviar("Hola mundo");
+		hmdc.enviar("Hola mundo");
+		hmdc.enviar("Hola mundo");
 
 		/******* COLA *******/
-		HolaMundoQueueReader hmqr = context.getBean(HolaMundoQueueReader.class);
-		hmqr.enviar("Hola mundo");
-		hmqr.enviar("Hola mundo");
-		hmqr.enviar("Hola mundo");
+		HolaMundoQueueChannel hmqc = context.getBean(HolaMundoQueueChannel.class);
+		// Enviando mensajes
+		hmqc.enviar("Hola mundo");
+		hmqc.enviar("Hola mundo");
+		hmqc.enviar("Hola mundo");
 		
-		// Enviando un mensaje
-		new Thread(new HolaMundoQueueReaderThread(hmqr)).start();
+		// Recibiendo mensajes
+		new Thread(new HolaMundoQueueChannelThread(hmqc)).start();
+
+		/******* PUBLISH SUBSCRIBE *******/
+		// Enviando mensajes
+		hmpsc.enviar("Hola mundo");
+		hmpsc.enviar("Hola mundo");
+		hmpsc.enviar("Hola mundo");
+
 	}
 	
-	public static class HolaMundoQueueReaderThread implements Runnable {
-		private HolaMundoQueueReader hmqr;
+	public static class HolaMundoQueueChannelThread implements Runnable {
+		private HolaMundoQueueChannel hmqr;
 		
-		public HolaMundoQueueReaderThread(HolaMundoQueueReader hmqr) {
+		public HolaMundoQueueChannelThread(HolaMundoQueueChannel hmqr) {
 			this.hmqr = hmqr;
 		}
 		
