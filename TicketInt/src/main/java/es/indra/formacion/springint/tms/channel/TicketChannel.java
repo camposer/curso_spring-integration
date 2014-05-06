@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class TicketChannel implements MessageHandler {
 	private DirectChannel canal;
 	
-	@Value("#{ticket}")
+	@Value("#{ticketPrioridadBaja}")
 	public void setCanal(DirectChannel canal) {
 		this.canal = canal;
 	}
