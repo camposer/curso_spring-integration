@@ -9,10 +9,10 @@ import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HolaMundoReader implements MessageHandler {
+public class HolaMundoDirectReader implements MessageHandler {
 	private DirectChannel canal;
 	
-	@Value("#{principal}")
+	@Value("#{canalDirecto}")
 	public void setCanal(DirectChannel canal) {
 		this.canal = canal;
 	}
@@ -27,6 +27,6 @@ public class HolaMundoReader implements MessageHandler {
 
 	@Override
 	public void handleMessage(Message<?> msg) throws MessagingException {
-		System.out.println("HolaMundoReader: " + msg);
+		System.out.println("HolaMundoDirectReader: " + msg);
 	}
 }

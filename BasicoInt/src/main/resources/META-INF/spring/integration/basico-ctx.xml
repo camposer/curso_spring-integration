@@ -11,6 +11,8 @@
 		base-package="es.indra.formacion.springint.channel"/>
 		
 	<!-- Canales -->
-	<int:channel id="principal"/><!-- DirectChannel -->
-
+	<int:channel id="canalDirecto"/><!-- DirectChannel -->
+	<int:channel id="canalCola"><!-- QueueChannel -->
+		<int:queue capacity="1000"/>
+	</int:channel>
 </beans>
