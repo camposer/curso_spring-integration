@@ -1,0 +1,17 @@
+Canales:
+- QueueChannel -> PollableChannel. Es una cola FIFO de toda la vida
+	- PriorityChannel (MessageHeaders.PRIORITY). Es una cola con prioridades
+	- RendezvousChannel (Blocking send). Es una cola donde no puede haber envío sin recepción
+- DirectChannel -> SubscribableChannel (send only to one subscriber). Es una cola de suscripción pero sólo procesa uno de los escuchas
+- NullChannel -> PollableChannel (send returns true and receive returns null). Para pruebas
+- PublishSubscribeChannel -> SubscribableChannel (publish-subscribe). Es una cola de suscripción de toda la vida
+
+ChannelInterceptors
+- preSend
+- postSend
+- preReceive
+- postReceive
+
+MessagingTemplate (send and receive)
+
+Channel backup
